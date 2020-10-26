@@ -27,6 +27,7 @@ If you have any issues open an issue!
 # Other
 - For Server ID's, Channel ID's you need to turn on Developer Mode. If you don't know how to turn out Google It
 - For Emoji ID's > type ``\:EMOJI:`` which gives you ``<EMOJI_NAME:EMOJI_ID>`` as the result. The animated emoji id's can be obtained in the same way howeve, the result will be ``<a:EMOJI_NAME:EMOJI_ID>``
+- If you want to add more accounts to the bot. Copy-past one of the examples and 
 
 If you still find any issues feel fee to open an issue. If you like the repoistry make sure to star the repoistry ⭐
 <br> Happy Coding
