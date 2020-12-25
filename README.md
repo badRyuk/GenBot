@@ -24,6 +24,15 @@ If your Discord token is public people may use your bot to do whatever they want
 Feel free to contribute to the repoistry by forking the repoistry and creating a pull request!
 If you have any issues open an issue!
 
+# Updates/TODO
+ > Next Update will be taking place very soon. If you have or want any good features to be added create new issue!
+ - [ ] - Using a better command handler
+ - [ ] - Add alias for all commands 
+ - [ ] - Add Slowmode for all commands
+ - [ ] - Add a Help command
+ - [ ] - Add usage info and help for all commands
+ - [ ] - Use bot mention as secondary prefix 
+ - [ ] - Add easier/better way of using emojis for the bot
 # Other
 - For Server ID's, Channel ID's you need to turn on Developer Mode. If you don't know how to turn out Google It
 - For Emoji ID's > type ``\:EMOJI:`` which gives you ``<EMOJI_NAME:EMOJI_ID>`` as the result. The animated emoji id's can be obtained in the same way howeve, the result will be ``<a:EMOJI_NAME:EMOJI_ID>``
