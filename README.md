@@ -9,8 +9,42 @@ Go through the entire bots code before using it. It is  very easy to use it. Jus
 - Change Emojis and Reactions. This may cause errors to you bot and hence I recomend you to change it
 - Change thumbnails. Add a picture link in the place of any thing else given inside ``.setThumbnail("HERE ADD YOUR LINK")``.
 
-# Starting the bot
-**YOU NEED A DISCORD TOKEN TO START THE BOT. YOU HAVE TO PLACE THE DISCORD TOKEN IN AN ``.env`` FILE. Rename ``.env.example`` TO ``.env``. PLACE YOUR TOKEN IN THE SPACE PROVIDED WITHOUT ANY QUOTES**
+# Installation > Setting Up > Starting > Using
+## Installation
+- Dowload this folder and save it to your desktop (Click the green download code button in the top right and click dowload zip)
+<br>**OR**
+- If you have git installed open command line and type 
+``git clone https://github.com/badRyuk/GenBot``. You must have git installed for this step 
+<br>
+[Git Installation Guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+<hr>
+
+## Setting Up
+- **YOU NEED A DISCORD TOKEN TO START THE BOT. YOU HAVE TO PLACE THE DISCORD TOKEN IN AN ``.env`` FILE. Rename ``.env.example`` TO ``.env``. PLACE YOUR TOKEN IN THE SPACE PROVIDED WITHOUT ANY QUOTES.**
+- **ADD CORRECT DETAILS IN THE ``config.json`` file.**<br>
+**NOTE:** ``coownerId`` is optional. If you don't have a co-owner simply leave it blank
+
+#### Set Up Info for ``config.json file``
+
+- ``prefix`` > Fill it with your desired letter/symbol, etc. This is used before command name. Current value is ``-`` however you can change it to anything like ``; or ! or g! or pls``
+- ``serverId`` > Certain Commands with ``myServerOnly value as true`` only can be used by members of your server. Add your server id here. Google on how to get the Server ID if you don't know.
+- ``ownerId`` > Certain commands such as the reload command have the ``ownerOnly value as true``. This restricts the command to the bot owner only. Add your id here. Google to user ids if you don't know.
+- ``coownerId`` > Certain commands such as the reload command have the ``ownerOnly value as true``. This restricts the command to the bot owners and coowners only. Leave it blank if none or add co owners id. Google to get user id's if you don't know.
+- ``genchannelOnly`` > Certain commands are restricted to certain channels only. These commands have the ``genChannelOnly value as true``. Google to get channel Id's if you don't know
+<hr>
+
+#### Adding More Commands / Editing Commands
+
+> If this is your first time ever making a discord.js bot I highly recomend you to watch a video on how to set up a discord.js. Also view up the [Discord.JS Guide](https://discordjs.guide/) and [Discord.js Docs](https://discord.js.org/#/docs/main/stable/general/welcome). If you don't know Javascript learn it first. Copying randomly won't help you with anything at all.
+
+Refer to the ``test.js`` file. It explains everything you need to do in setting up.
+<hr>
+
+## Starting the Bot
+- Finally after you're done with everything you wanted to do. Eg. Adding more commands, aliases, features, stock and all the stuff you want to do and feel you're ready to start the bot. Open command line/terminal. Type ``npm init``. You will have a bunch of questions just fill it or click enter without seeing anything (It won't make any difference. If you want you can change them afterwards in ``package-lock.json`` file.). FInally now install  the discord.js package using ``npm i discord.js`` and finally run ``node index.js``. 
+<hr>
+
 ## Requirements!
 - [Discord.js V12](https://www.npmjs.com/package/discord.js)
 - [Node.js](https://nodejs.org/en/) 
@@ -19,20 +53,25 @@ Go through the entire bots code before using it. It is  very easy to use it. Jus
 
 <br>**DO NOT OVER KEEP YOUR DISCORD TOKEN OR API KEYS PUBLIC!**
 If your Discord token is public people may use your bot to do whatever they want. From massbanning members, deleting channels, etc. Your can regenerate your token if you ever think that it has been leaked out in the public. Then change the old token in the ``.env`` file with the new token!
+
 # Contributing and Issues
 
 Feel free to contribute to the repoistry by forking the repoistry and creating a pull request!
 If you have any issues open an issue!
 
-# Updates/TODO
- > Next Update will be taking place very soon. If you have or want any good features to be added create new issue!
- - [ ] - Using a better command handler
- - [ ] - Add alias for all commands 
- - [ ] - Add Slowmode for all commands
- - [ ] - Add a Help command
- - [ ] - Add usage info and help for all commands
- - [ ] - Use bot mention as secondary prefix 
- - [ ] - Add easier/better way of using emojis for the bot
+# Update Log
+ > Update 2.0
+ - Updated On 11th January 2021
+ > Changes/Fixes
+ - [x] Changed Command Handler
+ - [x] Added Dynamic Help Command
+ - [x] Reload Command Added 
+ - [x] Command Usages, Aliases, Cooldowns, Guild Only, Gen Channel Only, Specific Server Only Commands Added
+ - [x] Added ``config.json`` file and more info on how to install, run, create commands to ``README.MD`` file.
+ - [x] Further bug fixes and minor changes.
+ - [x] Added ``test.js`` explaining all features and add mention as secondry prefix.
+
+ **This update basically adds better features to the bot along with a better command handler. Further smaller updates will be passed subsequent to this. Suggestions for new features will be appreciated! As of now [ 11th of January 2021 or the date this update/commit is pushed ] all the features are working just as expected.**
 # Other
 - For Server ID's, Channel ID's you need to turn on Developer Mode. If you don't know how to turn out Google It
 - For Emoji ID's > type ``\:EMOJI:`` which gives you ``<EMOJI_NAME:EMOJI_ID>`` as the result. The animated emoji id's can be obtained in the same way howeve, the result will be ``<a:EMOJI_NAME:EMOJI_ID>``

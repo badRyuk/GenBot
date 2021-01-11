@@ -1,9 +1,15 @@
 const { MessageEmbed } = require('discord.js');
 module.exports = {
-  name: "minecraft",
-  description: "Sends a minecraft account",
- run: async(client,message,args,guild) => {
-   var accounts = [
+	name: 'minecraft',
+	description: 'Generates a Minecraft account',
+  aliases: ['mc'],
+	usage: '-mc',
+  guildOnly: true,
+  myServerOnly: true,
+  genChannelOnly: true,
+	cooldown: 5,
+	execute(message) {
+   var minecraftAccounts = [
      "MAIL_ADDRESS | PASSWORD",
      "MAIL_ADDRESS | PASSWORD",
      "MAIL_ADDRESS | PASSWORD",
@@ -14,14 +20,15 @@ module.exports = {
      "MAIL_ADDRESS | PASSWORD"
    ];
    // Use that format so output sent will be MAIL_ADDRESS | PASSWORD. If out of stock change each of them with out of stock
-   var output = accounts[Math.floor(Math.random()*accounts.length)];
+   var output = minecraftAccounts[Math.floor(Math.random()*minecraftAccounts.length)];
     const embed = new MessageEmbed()
-      .setTitle('MineCraft Account Generated')
-      .setDescription(`Here is your minecraft account!`)
-      .addField(`**${output}**`)
+      .setTitle('Minecraft Account Generated')
+      .setDescription(`Here is your Minecraft account!`)
+      .addField(`${output}`, `Thank You for generating an account at **${message.guild.name}**`)
       .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
-      .setColor(message.guild.me.displayHexColor);
+      .setColor("RANDOM");
     message.author.send(embed);
+    
   }
 };

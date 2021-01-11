@@ -1,88 +1,98 @@
-const Discord = require('discord.js');
+const { Client, Collection } = require("discord.js");
+const { readdirSync } = require("fs");
+const { join } = require("path");
+const {prefix, serverId, ownerId, coownerId, genChannelOnlyId, TOKEN} = require('./config.json');
+const client = new Client({ disableMentions: "everyone" });
+require('dotenv').config()
 
-const client = new Discord.Client();
+client.commands = new Collection();
+client.prefix = prefix;
+const cooldowns = new Collection();
+const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-const { MessageEmbed } = require('discord.js');
-
-const { oneLine, stripIndent } = require('common-tags');
-
-const { readdirSync } = require('fs');
-
-const { join } = require('path');
-
-client.commands= new Discord.Collection();
-
-const prefix = ';';
-//You can change the prefix if you like. It doesn't have to be !
-
-
-const commandFiles = readdirSync(join(__dirname, "commands")).filter(file => file.endsWith(".js"));
-
-for (const file of commandFiles) {
-    const command = require(join(__dirname, "commands", `${file}`));
-    client.commands.set(command.name, command);
-}
-
-client.on("error", (e) => console.error(e));
-  client.on("warn", (e) => console.warn(e));
-  client.on("debug", (e) => console.info(e));
-
+/**
+ * Client Events
+ */
+client.on("ready", () => {
+  console.log(`${client.user.username} ready!`);
+// Set the client user's activity
+client.user.setActivity(`to ${prefix}help`, { type: 'LISTENING' })
+  .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+  .catch(console.error);
+});
+client.on("warn", (info) => console.log(info));
 client.on("error", console.error);
 
-client.on('ready', () => {
-    console.log('I am ready');
-    client.user.setStatus(`idle`)
-});
+/**
+ * Import all commands
+ */
+const commandFiles = readdirSync(join(__dirname, "commands")).filter((file) => file.endsWith(".js"));
+for (const file of commandFiles) {
+  const command = require(join(__dirname, "commands", `${file}`));
+  client.commands.set(command.name, command);
+}
 
+client.on("message", async (message) => {
+  if (message.author.bot) return;
+  // if (!message.guild) return;
 
-client.on("message", async message => {
+  const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
+  if (!prefixRegex.test(message.content)) return;
 
-    if(message.author.bot) return;
-    if(message.channel.type === 'dm') return;
+  const [, matchedPrefix] = message.content.match(prefixRegex);
 
-    if(message.content.startsWith(prefix)) {
-        const args = message.content.slice(prefix.length).trim().split(/ +/);
+  const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
+  const commandName = args.shift().toLowerCase();
 
-        const command = args.shift().toLowerCase() ||  client.aliases.get(commadName);
+  const command =
+    client.commands.get(commandName) ||
+    client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 
-        if(!client.commands.has(command)) return;
+  if (!command) return;
 
+  if (!cooldowns.has(command.name)) {
+    cooldowns.set(command.name, new Collection());
+  }
+if (command.guildOnly && message.channel.type === 'dm') {
+		return message.reply('I can\'t execute that command inside DMs!');
+	}
+  if (command.myServerOnly && message.guild.id !== serverId) {
+    message.channel.send('Command Cannot be used in this server. This command can only be used in servers specified by the bot developer')
+    return false;
+  }
+  if (command.ownerOnly && message.author.id !== ownerId || coownerId) {
+    message.channel.send('This command can only be used by the bot owner')
+    return false;
+  }
+  if (command.genChannelOnly && message.channel.id !== genChannelOnlyId) {
+    message.channel.send(`This command can only be used in <#${genChannelOnlyId || "deleted-channel"}>`)
+    return false;
+  }
+  const now = Date.now();
+  const timestamps = cooldowns.get(command.name);
+  const cooldownAmount = (command.cooldown || 1) * 1000;
 
-        try {
-            client.commands.get(command).run(client, message, args);
+  if (timestamps.has(message.author.id)) {
+    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
-        } catch (error){
-            console.error(error);
-        }
+    if (now < expirationTime) {
+      const timeLeft = (expirationTime - now) / 1000;
+      return message.reply(
+        `please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`
+      );
     }
-})
-client.on("message", message => {
-    if (message.author.bot) return false;
-    if (message.content.includes("@here") || message.content.includes("@everyone")) return false;
-    if(message.channel.type === 'dm') return;
-    if (message.mentions.has('760773438775492610')) { 
-     const embed = new MessageEmbed()
-        .setTitle('Hi, I\'m GenBot. Need help?')
-        .setThumbnail('https://cdn.discordapp.com/avatars/760773438775492610/a696351af5587d56907e85e97ed696cf.webp')
-        .setDescription(`You can see everything I can do by using the \`${prefix}help\` command. Remember commands won't work in DM.`)
-        .addField('Support', oneLine`
-          If you have questions, suggestions, feel free to contact a staff member!
-        `)
-        .addField('Thank You for using WGOBot!', '<:Heart:764027864991268874>')
-        .setColor("RANDOM");
-        message.channel.send(embed).then(sentEmbed => {
-    sentEmbed.react("765120683428282389")
-    })
-    };
+  }
+
+  timestamps.set(message.author.id, now);
+  setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+  try {
+    command.execute(message, args);
+  } catch (error) {
+    console.error(error);
+    message.reply("There was an error executing that command.").catch(console.error);
+  }
 });
- client.on("message", message => {
-    if (message.content.includes("@here") || message.content.includes("@everyone")) return false;
-      if(message.channel.type === 'dm') return;
 
-//    if (message.mentions.has('726452843606966405')) { 
-//		message.react('763707505174904843')
-//			.catch(() => console.error('One of the emojis failed to react.'));
-//   }
- });
-client.login(process.env.DISCORD_TOKEN);
-
+var token = process.env.token;
+client.login(token)
