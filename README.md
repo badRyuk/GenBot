@@ -1,3 +1,8 @@
+# Goodbye...atleast for a while 
+As of writing this...it has been almost an year since the previous update was done. A lot of code of the bot may be outdated as well as is missing features that could make it well like better like buttons and slash commands. A few errors have also been reported so i guess the bot doesn't work as intended anymore... Also, I haven't coded for a while. Hence, I'll be leaving this code here for a while until I either return to coding or just want to do this for no reason at all. I'll be still seeing issues and pull requests fell free to contribute as always. Won't be archiving this just yet as well. I've met up with a lot of people since the start of 2021 and want to spend time with them as well for now. mmm yeah thats all i think ive to say here even if noone's gonna read it. <br> <i>Thanks for Everything. Happy New Year
+ByeBye! ヾ(＾ ∇ ＾)</i>
+- badRyuk (30/12/2021)
+<br>psst. also leaving all my private projects i have worked on as public now. well they are also outdated (┬┬﹏┬┬) but at least they are there ig. (*^▽^*)
 # GenBot
 This is a simple gen-bot made with discord.js. This works with discordjs v12. It uses a command handler making it is easier to edit parts of the bot. This only uses one package which is discord.js!
 
@@ -15,7 +20,7 @@ Go through the entire bots code before using it. It is  very easy to use it. Jus
 <br>**OR**
 - If you have git installed open command line and type 
 ``git clone https://github.com/badRyuk/GenBot``. You must have git installed for this step 
-<br>
+
 [Git Installation Guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 <hr>
